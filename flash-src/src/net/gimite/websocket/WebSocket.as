@@ -276,6 +276,10 @@ public class WebSocket extends EventDispatcher {
           "error communicating with Web Socket server at " + url +
           " (SecurityError: " + event.text + ")";
     }
+    // Dispatch security error event to allow catching the error.
+    this.dispatchEvent(new WebSocketEvent(WebSocketEvent.SECURITY_ERROR, message));
+
+    //Close connection (NOTE: This will also dispatch a CLOSE event)
     onConnectionError(message);
   }
   
